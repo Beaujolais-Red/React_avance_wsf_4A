@@ -1,11 +1,11 @@
-import useEnhancedEffect from '@mui/utils/useEnhancedEffect'
 import React, { useReducer, useState, useEffect } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { Picker_Picture, Post, PostContent, User } from '../api/types'
 import Field from '../private/Field'
 import ImageGalleryPicker from './ImageGalleryPicker'
 import { getPost } from '../api/post'
-
+import { getAllUser } from '../api/user'
+ 
 type FormEvent =
     | React.ChangeEvent<HTMLTextAreaElement>
     | React.ChangeEvent<HTMLInputElement>
@@ -37,9 +37,18 @@ const EditPost = () => {
         convertToFormData(data);
     }
 
+    async function _getUsers() { 
+        const data = await getAllUser();
+        setUsers(data);
+    }
+
     useEffect(() => {
         _getPost(Number(id))
     }, [id]);
+
+    useEffect(() => {
+        _getUsers();
+    }, [])
 
     function handleModalPictureSubmit(picture: Picker_Picture) {
         setFormData({
@@ -106,10 +115,13 @@ const EditPost = () => {
         if (formData.userId) {
             // [WORK]
             // You need to find the author name with the server
-            return '[TO DO]'
-        } else {
-            return 'Unknown author'
+            const selectedUser = users.find((user) => user.id === formData.userId)
+            console.log("selectedUser", selectedUser);
+            if (selectedUser) {
+                return selectedUser.name;
+            }
         }
+        return 'Unknown author'
     }
 
     return (

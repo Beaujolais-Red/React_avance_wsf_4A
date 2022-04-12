@@ -6,7 +6,7 @@ async function getAllUser(): Promise<Array<User>> {
     // Get all users
     // [TODO] remove this return to use a fetch API
     const response = await fetch(base_url);
-    return await response.json()
+    return await response.json();
 
     // return [
     //     {
