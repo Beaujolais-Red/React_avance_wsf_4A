@@ -1,5 +1,6 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState, useCallback, useEffect } from 'react'
 import Gallery from 'react-photo-gallery'
+import { getAllPicture, getPicture } from '../api/photo'
 import { Picker_Picture, API_Picture } from '../api/types'
 import SelectedImage from '../private/SelectedImage'
 
@@ -15,7 +16,10 @@ const ImageGalleryPicker = ({ onClose, onSubmit }: ImageGalleryPickerProps) => {
 
     async function getPicture() {
         // [TODO] Fetch picture
+        const data = await getAllPicture();
+        setPictures(data);
     }
+
     function handleOnClick(picture: Picker_Picture) {
         setSelectedPicture(picture)
     }
@@ -52,6 +56,10 @@ const ImageGalleryPicker = ({ onClose, onSubmit }: ImageGalleryPickerProps) => {
         id: picture.id,
     }))
 
+    useEffect(() => {
+        getPicture()
+    }, [])
+
     return (
         <div className="modal post-image-modal">
             <div className="modal-background"></div>
@@ -82,6 +90,5 @@ const ImageGalleryPicker = ({ onClose, onSubmit }: ImageGalleryPickerProps) => {
             </div>
         </div>
     )
-}
-
+    }
 export default ImageGalleryPicker
