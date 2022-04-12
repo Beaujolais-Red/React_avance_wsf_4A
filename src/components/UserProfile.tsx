@@ -10,14 +10,14 @@ const UserProfile = () => {
 
     let { id } = useParams() // get the id from url
 
-    // async function _getUser(id : number) {
-    //     const data = await getUser(id)
-    //     return data
-    // }
+    async function _getUser(_id : number) {
+        const data = await getUser(_id);
+        setAuthor(data);
+    }
 
-    // useEffect(() => {
-    //     _getUser();
-    // }, []);
+    useEffect(() => {
+        _getUser(Number(id));
+    }, [id]);
 
     return (
         author && (
