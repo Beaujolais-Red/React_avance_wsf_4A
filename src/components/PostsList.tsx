@@ -1,4 +1,3 @@
-import useEnhancedEffect from '@mui/utils/useEnhancedEffect'
 import React, { useEffect, useState } from 'react'
 import { Post } from '../api/types'
 import PostItem from './PostItem'
